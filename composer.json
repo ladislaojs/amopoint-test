@@ -69,6 +69,11 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "init-app": [
+            "composer run setup",
+            "composer run post-create-project-cmd",
+            "composer run dev"
         ]
     },
     "extra": {
