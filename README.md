@@ -1,58 +1,52 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Инструкция по тестовому заданию
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 1 задача: PHP
 
-## About Laravel
+Задание: Напишите Laravel проект, в состав которого обязательно входит
+1. Консольная команда, которая каждые 5 минут получает информацию от любого API на ваш выбор и сохраняет её в таблицу БД
+2. Route, отдающий массив записей таблицы в формате json
+Например:   https://official-joke-api.appspot.com/random_joke
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Решение: представлено в данном репозитории. Для запуска нужно склонировать репозиторий, в корневой директории проекта ввести команду `composer run init-app`, затем в новом терминале так же в этой же директории ввести команду `php artisan schedule:work`, чтобы запустить планировшик, который и будет каждые 5 минут запускать консольную команду, требующуюся в задании. Эндпоинт для получения массива записей: GET /api/jokes
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 2 задача: JS
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Задание: 2.Необходимо написать js код, который в зависимости от выбранного значения поля Тип отражает разный набор полей на странице   http://test.amopoint-dev.ru/testzz/testlist.html
+Должны отображаться только те поля в атрибуте name которых есть значение выбранного элемента списка.
+Решение должно представлять из себя файл для подключения к странице, либо сниппет для запуска в браузере в консоли.
 
-## Learning Laravel
+Решение (файл с этим же кодом можно найти в данном репозитории по пути resources/js/task2.js):
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```js
+const inputs = document.querySelectorAll('[name^="input_"], [name^="button_"]');
+const fields = Array.from(inputs).map(input => ({
+    input,
+    wrapper: input.closest('p')
+}));
+function renderFields() {
+    fields.forEach(field => {
+        field.input.name.split('_')[1] == e.target.value ? document.body.appendChild(field.wrapper) : field.wrapper.remove(); 
+    });
+}
+function renderFields(type) {
+    fields.forEach(field => {
+        field.input.name.split('_')[1] == type ? document.body.appendChild(field.wrapper) : field.wrapper.remove(); 
+    });
+}
+const typeSelect = document.querySelector('[name="type_val"]');
+typeSelect.addEventListener('change', () => {
+    renderFields(typeSelect.value);
+});
+renderFields(typeSelect.value);
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## 3 задача: PHP + JS
 
-## Contributing
+Задание: 3.Написать счетчик посещений страницы. Решение должно состоять из двух компонентов: 
+-кода на js, который подключается к любому сайту. Скрипт должен собрать необходимые данные(ip, город, устройство) и отправлять на сервер.
+ -бэк часть, который хранит данные в БД(sqllite или другой на выбор) и показывает график посещений по часам(по оси х - количество уникальных посещений за час, по оси y- время), круговую диаграмму с разбиением по городам.
+Оформить в виде страницы просмотра статистики с авторизацией. Решение выложить на любой хостинг для возможности проверки
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Решение:
+Ссылка на страницу, для которой считаются посещения: https://stiezsht.gt.tc/
+Ссылка на страницу с графиками: https://stiezsht.gt.tc/stats (авторизация по Basic Auth, логин и пароль одинаковые: amopoint)
