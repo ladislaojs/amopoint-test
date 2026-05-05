@@ -36,14 +36,14 @@ class VisitController extends Controller
     public function saveVisit(CreateVisitRequest $request) {
         $data = $request->validated();
 
-        Visit::firstOrCreate(
+        Visit::whereBetween('created_at', [Carbon::now()->startOfHour(), Carbon::now()->endOfHour()])->firstOrCreate(
             [
                 'ip_address' => $data['ip_address'],
             ],
             [
-                'location'   => $data['location'],
-                'device'     => $data['device'],
+                'location' => $data['location'],
+                'device' => $data['device'],
             ]
-        )->whereBetween('created_at', [Carbon::now()->startOfHour(), Carbon::now()->endOfHour()]);
+        );
     }
 }
