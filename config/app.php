@@ -125,7 +125,7 @@ return [
 
     'api_urls' => [
         'jokes' => env('JOKES_API_ENDPOINT', 'https://official-joke-api.appspot.com/random_joke'),
-        
+        'ip' => env('IP_API_ENDPOINT', 'http://ip-api.com/json'),
     ]
 
 ];

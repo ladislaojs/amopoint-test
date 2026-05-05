@@ -3,13 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('index');
+    return view('index', [
+        'ip_api_endpoint' => config('app.api_urls.ip'),
+    ]);
 });
 
-Route::get('/stats', function () {
+Route::middleware(['auth.custom_basic'])->get('/stats', function () {
     return view('graph');
 });
-
-// Route::middleware(['auth.basic'])->get('/stats', function () {
-//     return view('graph');
-// });

@@ -10,7 +10,7 @@
     <script>
         async function collectGeoData() {
             try {
-                const res = await fetch("http://ip-api.com/json");
+                const res = await fetch("{{ $ip_api_endpoint }}");
                 const data = await res.json();
 
                 return {
